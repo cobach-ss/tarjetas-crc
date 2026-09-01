@@ -1,11 +1,86 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
+
+<Layout title="Tarjetas CRC">
+  <main>
+    <div class="contenido-tarjeta">
+      <div class="tabla">
+        <table id="tablaClases">
+          <thead>
+            <tr>
+              <th colspan="4" class="header-clase">
+                <input type="text" id="nombreClase" placeholder="Nombre de clase..." />
+              </th>
+            </tr>
+            <tr>
+              <th>Responsabilidades</th>
+              <th>Colaboradores</th>
+              <th>Pensamientos en objetos</th>
+              <th>Propiedad</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpoTabla">
+            <tr class="fila-input">
+              <td><input type="text" class="input-resp" placeholder="Escribir..." /></td>
+              <td><input type="text" class="input-colab" placeholder="Escribir..." /></td>
+              <td><input type="text" class="input-pens" placeholder="Escribir..." /></td>
+              <td><input type="text" class="input-prop" placeholder="Escribir..." /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="acciones">
+        <button id="btnAgregar" class="btn">Agregar fila</button>
+        <button id="btnBorrar" class="btn">Borrar fila</button>
+        <button id="btnGuardar" class="btn btn-guardar">Guardar</button>
+        <button id="btnImprimir" class="btn">Imprimir / PDF</button>
+      </div>
+    </div>
+  </main>
 </Layout>
+
+<script>
+  const btnAgregar = document.getElementById('btnAgregar');
+  const btnBorrar = document.getElementById('btnBorrar');
+  const btnGuardar = document.getElementById('btnGuardar');
+  const cuerpoTabla = document.getElementById('cuerpoTabla');
+  const btnImprimir = document.getElementById('btnImprimir');
+
+  btnImprimir?.addEventListener('click', () => {
+    window.print();
+  });
+
+  btnAgregar?.addEventListener('click', () => {
+    if (!cuerpoTabla) return;
+    
+    const nuevaFila = document.createElement('tr');
+    nuevaFila.innerHTML = `
+      <td><input type="text" class="input-resp" placeholder="Escribir..." /></td>
+      <td><input type="text" class="input-colab" placeholder="Escribir..." /></td>
+      <td><input type="text" class="input-pens" placeholder="Escribir..." /></td>
+      <td><input type="text" class="input-prop" placeholder="Escribir..." /></td>
+    `;
+    cuerpoTabla.appendChild(nuevaFila);
+  });
+
+  btnBorrar?.addEventListener('click', () => {
+    if (!cuerpoTabla) return;
+    const filas = cuerpoTabla.querySelectorAll('tr');
+    if (filas.length > 1) {
+      cuerpoTabla.removeChild(filas[filas.length - 1]);
+    } else {
+      alert('Debes mantener al menos una fila.');
+    }
+  });
+
+  btnGuardar?.addEventListener('click', () => {
+    const nombreClase = (document.getElementById('nombreClase') as HTMLInputElement)?.value;
+    alert(`Guardando tarjetas CRC: "${nombreClase || 'Sin Nombre'}"`);
+
+	}
+  );
+</script>
+
