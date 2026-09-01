@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarjetas CRC</title>
+</head>
+<body>
+  <main>
+    <div class="contenido-tarjeta">
+      <div class="tabla">
+        <table id="tablaClases">
+          <thead>
+            <tr>
+              <th colspan="4" class="header-clase">
+                <input type="text" id="nombreClase" placeholder="Nombre de clase..." />
+              </th>
+            </tr>
+            <tr>
+              <th>Responsabilidades</th>
+              <th>Colaboradores</th>
+              <th>Pensamientos en objetos</th>
+              <th>Propiedad</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpoTabla">
+            <tr class="fila-input">
+              <td><input type="text" class="input-resp" placeholder="Escribir..." /></td>
+              <td><input type="text" class="input-colab" placeholder="Escribir..." /></td>
+              <td><input type="text" class="input-pens" placeholder="Escribir..." /></td>
+              <td><input type="text" class="input-prop" placeholder="Escribir..." /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="acciones">
+        <button id="btnAgregar" class="btn">Agregar fila</button>
+        <button id="btnBorrar" class="btn">Borrar fila</button>
+        <button id="btnImprimir" class="btn">Imprimir / PDF</button>
+        <button id="btnGuardar" class="btn btn-guardar">Guardar</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const btnAgregar = document.getElementById('btnAgregar');
+    const btnBorrar = document.getElementById('btnBorrar');
+    const btnGuardar = document.getElementById('btnGuardar');
+    const btnImprimir = document.getElementById('btnImprimir');
+    const cuerpoTabla = document.getElementById('cuerpoTabla');
+
+    btnAgregar.addEventListener('click', () => {
+      const nuevaFila = document.createElement('tr');
+      nuevaFila.innerHTML = `
+        <td><input type="text" class="input-resp" placeholder="Escribir..." /></td>
+        <td><input type="text" class="input-colab" placeholder="Escribir..." /></td>
+        <td><input type="text" class="input-pens" placeholder="Escribir..." /></td>
+        <td><input type="text" class="input-prop" placeholder="Escribir..." /></td>
+      `;
+      cuerpoTabla.appendChild(nuevaFila);
+    });
+
+    btnBorrar.addEventListener('click', () => {
+      const filas = cuerpoTabla.querySelectorAll('tr');
+      if (filas.length > 1) {
+        cuerpoTabla.removeChild(filas[filas.length - 1]);
+      } else {
+        alert('Debes mantener al menos una fila.');
+      }
+    });
+
+    btnGuardar.addEventListener('click', () => {
+      const nombreClase = document.getElementById('nombreClase').value;
+      alert(`Guardando tarjetas CRC: "${nombreClase || 'Sin Nombre'}"`);
+    });
+
+    btnImprimir.addEventListener('click', () => {
+      window.print();
+    });
+  </script>
+
+  <style>
+    main {
+      display: flex;
+      justify-content: center;
+      padding: 30px;
+      font-family: 'Arial';
+    }
+    body {
+      background-color: gray;
+      margin: 0;
+    }
+    .contenido-tarjeta {
+      border: 3px solid #df5a01;
+      border-radius: 20px;
+      padding: 20px;
+      background-color: #fafafa;
+      max-width: 900px;
+      width: 100%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .tabla {
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-radius: 20px;
+      border-collapse: collapse;
+      background-color: #fff;
+    }
+    th, td {
+      border: 2px solid #222;
+      padding: 10px;
+      text-align: center;
+    }
+    .header-clase {
+      font-size: 1.2rem;
+      padding: 12px;
+    }
+    .header-clase input {
+      font-size: 1.1rem;
+      font-weight: bold;
+      text-align: center;
+      width: 80%;
+      border: none;
+      border-bottom: 2px dashed #666;
+      outline: none;
+    }
+    input[type="text"] {
+      width: 90%;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: inherit;
+    }
+    .acciones {
+      display: flex;
+      gap: 15px;
+      justify-content: flex-start;
+    }
+    .btn {
+      border: 2px solid #d65600;
+      background-color: #fff;
+      color: #333;
+      padding: 10px 24px;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-family: Arial;
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      background-color: #f0e0d6;
+    }
+    .btn-guardar {
+      margin-left: auto;
+    }
+
+    @media print {
+      body {
+        background-color: white;
+      }
+      .acciones {
+        display: none;
+      }
+      .contenido-tarjeta {
+        box-shadow: none;
+        border: 2px solid #000;
+      }
+      input[type="text"] {
+        border: none;
+        background: transparent;
+        padding: 2px;
+      }
+      .header-clase input {
+        border-bottom: 1px solid #000;
+      }
+    }
+  </style>
+</body>
+</html>
