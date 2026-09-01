@@ -14,14 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 11.4.0
-      - uses: actions/setup-node@v4
+      - uses: withastro/action@v3
         with:
           node-version: 22
-          cache: 'pnpm'
-      - uses: withastro/action@v3
+          package-manager: pnpm@11.4.0
 
   deploy:
     needs: build
